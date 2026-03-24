@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title> </title>
+
+<style>
+    body {
+        margin: 0;
+        background: black;
+        overflow: hidden;
+    }
+
+    /* stars */
+    .stars {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+    }
+
+    .stars::after {
+        content: "";
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background: white;
+        box-shadow:
+        20px 30px white,
+        100px 200px white,
+        300px 400px white,
+        500px 100px white,
+        800px 300px white,
+        1200px 600px white,
+        1500px 200px white,
+        1700px 700px white,
+        1900px 500px white;
+        animation: twinkle 3s infinite alternate;
+    }
+
+    @keyframes twinkle {
+        from { opacity: 0.3; }
+        to { opacity: 1; }
+    }
+
+    /* invisible click layer */
+    .click {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="stars"></div>
+<div class="click" onclick="playAudio()"></div>
+
+<audio id="music" src="https://files.catbox.moe/8qfhg7.mp3"></audio>
+
+<script>
+function playAudio() {
+    const audio = document.getElementById("music");
+    audio.volume = 0.5;
+    audio.play();
+}
+</script>
+
+</body>
+</html>
