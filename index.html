@@ -9,6 +9,7 @@
         margin: 0;
         background: black;
         overflow: hidden;
+        font-family: sans-serif;
     }
 
     /* star layers */
@@ -16,49 +17,38 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        background: transparent;
     }
 
-    .stars::after {
+    .stars::after, .stars2::after, .stars3::after {
         content: "";
         position: absolute;
         width: 2px;
         height: 2px;
         background: white;
-        box-shadow:
-        100px 200px white, 300px 400px white, 500px 100px white,
-        800px 300px white, 1200px 600px white, 1500px 200px white,
-        1700px 700px white, 1900px 500px white, 600px 800px white,
-        400px 900px white, 900px 1200px white, 1300px 300px white;
         animation: twinkle 3s infinite alternate;
     }
 
+    .stars::after {
+        box-shadow:
+        100px 200px white, 300px 400px white, 500px 100px white,
+        800px 300px white, 1200px 600px white, 1500px 200px white,
+        1700px 700px white, 1900px 500px white, 600px 800px white;
+    }
+
     .stars2::after {
-        content: "";
-        position: absolute;
         width: 1.5px;
         height: 1.5px;
-        background: white;
         box-shadow:
         50px 150px white, 250px 350px white, 450px 250px white,
-        750px 450px white, 1100px 550px white, 1400px 350px white,
-        1650px 650px white, 1850px 450px white, 700px 700px white,
-        300px 1100px white, 1000px 100px white, 1600px 900px white;
-        animation: twinkle 4s infinite alternate;
+        750px 450px white, 1100px 550px white, 1400px 350px white;
     }
 
     .stars3::after {
-        content: "";
-        position: absolute;
         width: 1px;
         height: 1px;
-        background: white;
         box-shadow:
         120px 220px white, 320px 420px white, 520px 120px white,
-        820px 320px white, 1220px 620px white, 1520px 220px white,
-        1720px 720px white, 1920px 520px white, 620px 820px white,
-        420px 920px white, 920px 1220px white, 1320px 320px white;
-        animation: twinkle 5s infinite alternate;
+        820px 320px white, 1220px 620px white, 1520px 220px white;
     }
 
     @keyframes twinkle {
@@ -66,22 +56,31 @@
         to { opacity: 1; }
     }
 
-    /* invisible click layer */
-    .click {
+    /* center play button */
+    .play {
         position: absolute;
-        width: 100%;
-        height: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: rgba(255,255,255,0.8);
+        font-size: 40px;
         cursor: pointer;
+        transition: 0.3s;
     }
 
-    /* subtle hint text */
-    .hint {
+    .play:hover {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 1;
+    }
+
+    /* subtle label */
+    .label {
         position: absolute;
-        width: 100%;
-        top: 50%;
-        text-align: center;
-        color: rgba(255,255,255,0.08);
-        font-size: 14px;
+        top: calc(50% + 40px);
+        left: 50%;
+        transform: translateX(-50%);
+        color: rgba(255,255,255,0.2);
+        font-size: 12px;
         letter-spacing: 2px;
     }
 </style>
@@ -93,27 +92,21 @@
 <div class="stars2"></div>
 <div class="stars3"></div>
 
-<div class="hint"> </div>
-<div class="click" onclick="playAudio()"></div>
+<div class="play" onclick="playAudio()">▶</div>
+<div class="label">play</div>
 
-<audio id="music" src="https://files.catbox.moe/8qfhg7.mp3" autoplay></audio>
+<audio id="music" src="https://files.catbox.moe/8qfhg7.mp3"></audio>
 
 <script>
 const audio = document.getElementById("music");
 
-// try autoplay
-window.onload = () => {
-    audio.volume = 0.5;
-    audio.play().catch(() => {
-        // autoplay blocked → waits for click
-        document.body.addEventListener("click", () => {
-            audio.play();
-        }, { once: true });
-    });
-};
-
 function playAudio() {
+    audio.volume = 0.4;
     audio.play();
+
+    // hide button after clicking
+    document.querySelector(".play").style.display = "none";
+    document.querySelector(".label").style.display = "none";
 }
 </script>
 
