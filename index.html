@@ -12,43 +12,24 @@
         font-family: sans-serif;
     }
 
-    /* star layers */
-    .stars, .stars2, .stars3 {
+    /* stars */
+    .stars {
         position: absolute;
         width: 100%;
         height: 100%;
     }
 
-    .stars::after, .stars2::after, .stars3::after {
+    .stars::after {
         content: "";
         position: absolute;
         width: 2px;
         height: 2px;
         background: white;
-        animation: twinkle 3s infinite alternate;
-    }
-
-    .stars::after {
         box-shadow:
         100px 200px white, 300px 400px white, 500px 100px white,
         800px 300px white, 1200px 600px white, 1500px 200px white,
         1700px 700px white, 1900px 500px white, 600px 800px white;
-    }
-
-    .stars2::after {
-        width: 1.5px;
-        height: 1.5px;
-        box-shadow:
-        50px 150px white, 250px 350px white, 450px 250px white,
-        750px 450px white, 1100px 550px white, 1400px 350px white;
-    }
-
-    .stars3::after {
-        width: 1px;
-        height: 1px;
-        box-shadow:
-        120px 220px white, 320px 420px white, 520px 120px white,
-        820px 320px white, 1220px 620px white, 1520px 220px white;
+        animation: twinkle 3s infinite alternate;
     }
 
     @keyframes twinkle {
@@ -56,44 +37,49 @@
         to { opacity: 1; }
     }
 
-    /* center play button */
-    .play {
+    /* PLAY BUTTON (fixed) */
+    .play-btn {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        color: rgba(255,255,255,0.8);
-        font-size: 40px;
+        width: 80px;
+        height: 80px;
+        border: 2px solid rgba(255,255,255,0.8);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         cursor: pointer;
+        background: rgba(255,255,255,0.05);
+        backdrop-filter: blur(2px);
         transition: 0.3s;
     }
 
-    .play:hover {
+    .play-btn:hover {
         transform: translate(-50%, -50%) scale(1.1);
-        opacity: 1;
+        background: rgba(255,255,255,0.1);
     }
 
-    /* subtle label */
-    .label {
-        position: absolute;
-        top: calc(50% + 40px);
-        left: 50%;
-        transform: translateX(-50%);
-        color: rgba(255,255,255,0.2);
-        font-size: 12px;
-        letter-spacing: 2px;
+    .triangle {
+        width: 0;
+        height: 0;
+        border-left: 18px solid white;
+        border-top: 12px solid transparent;
+        border-bottom: 12px solid transparent;
+        margin-left: 5px;
     }
+
 </style>
 </head>
 
 <body>
 
 <div class="stars"></div>
-<div class="stars2"></div>
-<div class="stars3"></div>
 
-<div class="play" onclick="playAudio()">▶</div>
-<div class="label">play</div>
+<div class="play-btn" onclick="playAudio()">
+    <div class="triangle"></div>
+</div>
 
 <audio id="music" src="https://files.catbox.moe/8qfhg7.mp3"></audio>
 
@@ -104,9 +90,8 @@ function playAudio() {
     audio.volume = 0.4;
     audio.play();
 
-    // hide button after clicking
-    document.querySelector(".play").style.display = "none";
-    document.querySelector(".label").style.display = "none";
+    // remove button after click
+    document.querySelector(".play-btn").style.display = "none";
 }
 </script>
 
